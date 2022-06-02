@@ -5,6 +5,7 @@ canvas.width = 800;
 canvas.height = 500;
 const keys = {};
 let kills = 0;
+let escaped = 0; 
 const player = {
     x: 200,
     y: 200,
@@ -126,9 +127,10 @@ function createEnemies() {
                 return;
             }
             let moveEnemyLeft = () => {
-                if (this.x < 0) {
+                if (this.x < 0 && !this.hide) {
                     //removes one element from the specific index.
                     enemies[index].hide = true;
+                    escaped++;
                     return;
                 }
                 this.direction = directions.left;
@@ -274,6 +276,7 @@ function handleMissiles(missile, index) {
             resetPosition(currentEnemy);
             explosion.x = collision.position.x;
             explosion.y = collision.position.y;
+            explosion.sprite.src = './assets/explosion.png';
             explosions.push(explosion);
             kills++;
         });
@@ -291,10 +294,29 @@ function handleEnemiesRender() {
         enemy.moveEnemy(index);
     });
 }
-function handleTextOnCanvas(){
+function handlePlayerEnemiesCollision() {
+    let visibleEnemies = enemies.filter(enemy => !enemy.hide);
+    let players = [player];
+    let collisions = detectCollisions(players, visibleEnemies);
+    if (collisions.length == 0)
+        return;
+    collisions.forEach(collision=>{
+        let enemy = collision.secondObject; 
+        let currentEnemy = enemies[enemy.index];  
+        currentEnemy.hide = true;
+        resetPosition(currentEnemy);
+        explosion.x = collision.position.x;
+        explosion.y = collision.position.y;
+        explosion.sprite.src = './assets/smoke.png';
+        explosions.push(explosion);
+        kills++;
+    });
+}
+function handleTextOnCanvas() {
     ctx.font = 'bold 24px cursive';
     ctx.fillStyle = "#fefefe"; //<======= here
-    ctx.fillText('Kills:' + kills, canvas.width-100, 30);
+    ctx.fillText('Kills:' + kills, canvas.width - 150, 30);
+    ctx.fillText('Escaped:' + escaped, canvas.width - 150,60)
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -316,6 +338,7 @@ function animate() {
     player.drawPlayer();
     player.playerEvents();
     handleEnemiesRender();
+    handlePlayerEnemiesCollision();
     if (missiles.length > 0) {
         missiles.forEach((missile, index) => {
             handleMissiles(missile, index);
