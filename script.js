@@ -5,7 +5,7 @@ canvas.width = 800;
 canvas.height = 500;
 const keys = {};
 let kills = 0;
-let escaped = 0; 
+let escaped = 0;
 const player = {
     x: 200,
     y: 200,
@@ -45,7 +45,7 @@ const player = {
             player.frameY = 3;
             player.direction = directions.up;
         }
-        if (keys.f) {
+        if (keys.x) {
             if (missiles.length > 2)
                 return;
             player.firing = true;
@@ -53,7 +53,13 @@ const player = {
                 createMissiles();
             this.timeSinceLastFire = Date.now();
         }
+        if (keys.z) {
+            player.speed += 2;
+        }
         this.handlePlayerFrame();
+    },
+    resetSpeed() {
+        player.speed = 9;
     },
     handlePlayerFrame() {
         if (player.moving)
@@ -83,6 +89,7 @@ let enemySprites = ['./assets/yoda.png', './assets/jedi.png',
     './assets/twilek.png', './assets/stormtrooper.png'
 ];
 setInterval(createEnemies, 1000);
+setInterval(player.resetSpeed, 1000);
 function createEnemies() {
     if (enemySprites.length == 0) {
         showEnemy();
@@ -300,9 +307,9 @@ function handlePlayerEnemiesCollision() {
     let collisions = detectCollisions(players, visibleEnemies);
     if (collisions.length == 0)
         return;
-    collisions.forEach(collision=>{
-        let enemy = collision.secondObject; 
-        let currentEnemy = enemies[enemy.index];  
+    collisions.forEach(collision => {
+        let enemy = collision.secondObject;
+        let currentEnemy = enemies[enemy.index];
         currentEnemy.hide = true;
         resetPosition(currentEnemy);
         explosion.x = collision.position.x;
@@ -316,7 +323,7 @@ function handleTextOnCanvas() {
     ctx.font = 'bold 24px cursive';
     ctx.fillStyle = "#fefefe"; //<======= here
     ctx.fillText('Kills:' + kills, canvas.width - 150, 30);
-    ctx.fillText('Escaped:' + escaped, canvas.width - 150,60)
+    ctx.fillText('Escaped:' + escaped, canvas.width - 150, 60)
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -328,6 +335,9 @@ function startAnimating(fps) {
 }
 function animate() {
     requestAnimationFrame(animate);
+    let paused = checkForPause();
+    if(paused)
+        return;
     now = Date.now();
     elapsed = now - then;
     if (fpsInterval > elapsed)

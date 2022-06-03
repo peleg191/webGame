@@ -1,14 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Game</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a id="btn-menu" class="nav-link text-white" data-bs-toggle="offcanvas" href="#sideMenu" role="button"
+                            aria-controls="offcanvasExample">
+                            Menu
+                            <i class="bi bi-x-diamond-fill text-white" style="font-size: 1rem; "></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="sideMenu" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-white" id="offcanvasExampleLabel">Mandalorian Fight</h5>
+            <!-- <button type="button" class="btn-close text-reset text-white bg-dark data-bs-dismiss="offcanvas" aria-label="Close" style="color:white;"></button> -->
+        </div>
+        <div class="offcanvas-body">
+            <div class="text-white">
+                <p>As a bounty hunter, killing gives you money</p>
+                <p>use it to upgrade your skills.</p>
+            </div>
+            <div class="card bg-grey" id="controls">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h6 class="text--white">Controls</h6>
+                    </div>
+                    <div class="card-text">
+                        <div class="row ">
+                            <div class="col sm-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="bi bi-arrow-up-square"></i>
+                                        <span>Up</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="bi bi-arrow-down-square"></i>
+                                        <span>Down</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="bi bi-arrow-left-square"></i>
+                                        <span>Left</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="bi bi-arrow-right-square"></i>
+                                        <span>Right</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col sm-4">
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="./assets/z.svg" style="height:24px; width:24px;"></i>
+                                        <span>Dash</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="./assets/x.svg" style="height:24px; width:24px;"></i>
+                                        <span>Fire</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <canvas id="canvas1"></canvas>
+    <script src="./bootstrapScript.js"></script>
     <script src="./helper.js"></script>
     <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
 </body>
 </html>

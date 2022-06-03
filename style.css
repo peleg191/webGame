@@ -10,5 +10,12 @@
    
 }
 body{
-    background-color: black;
+    background-color: black !important;
+    font-family:cursive !important;
+}
+#btn-menu{
+   border-radius:10px;
+}
+.text--white{
+    color:white !important
 }
