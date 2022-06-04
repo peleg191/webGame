@@ -6,6 +6,9 @@ canvas.height = 500;
 const keys = {};
 let kills = 0;
 let escaped = 0;
+var incomingMoneyTransaction = 0;
+evaluatePlayerStats();
+renderSkillDisplay();
 const player = {
     x: 200,
     y: 200,
@@ -13,7 +16,7 @@ const player = {
     height: 48,
     frameX: 0,
     frameY: 0,
-    speed: 9,
+    speed: playerStats.speed,
     moving: false,
     direction: '',
     fireCooldown: false,
@@ -46,7 +49,7 @@ const player = {
             player.direction = directions.up;
         }
         if (keys.x) {
-            if (missiles.length > 2)
+            if (missiles.length > playerStats.missiles - 1)
                 return;
             player.firing = true;
             if (Date.now() - this.timeSinceLastFire > 100)
@@ -54,12 +57,12 @@ const player = {
             this.timeSinceLastFire = Date.now();
         }
         if (keys.z) {
-            player.speed += 2;
+            player.speed += playerStats.dash;
         }
         this.handlePlayerFrame();
     },
     resetSpeed() {
-        player.speed = 9;
+        player.speed = playerStats.speed;
     },
     handlePlayerFrame() {
         if (player.moving)
@@ -138,6 +141,7 @@ function createEnemies() {
                     //removes one element from the specific index.
                     enemies[index].hide = true;
                     escaped++;
+                    incomingMoneyTransaction--;
                     return;
                 }
                 this.direction = directions.left;
@@ -212,7 +216,7 @@ function createMissiles() {
         height: 50,
         frameX: 0,
         frameY: 0,
-        speed: 20,
+        speed: playerStats.missileSpeed,
         moving: false,
         firing: false,
         direction: player.direction,
@@ -286,6 +290,7 @@ function handleMissiles(missile, index) {
             explosion.sprite.src = './assets/explosion.png';
             explosions.push(explosion);
             kills++;
+            incomingMoneyTransaction++;
         });
     }
     missileMovement();
@@ -317,6 +322,7 @@ function handlePlayerEnemiesCollision() {
         explosion.sprite.src = './assets/smoke.png';
         explosions.push(explosion);
         kills++;
+        incomingMoneyTransaction++;
     });
 }
 function handleTextOnCanvas() {
@@ -335,9 +341,9 @@ function startAnimating(fps) {
 }
 function animate() {
     requestAnimationFrame(animate);
-    let paused = checkForPause();
-    if(paused)
+    if (menuOpen) {
         return;
+    }
     now = Date.now();
     elapsed = now - then;
     if (fpsInterval > elapsed)

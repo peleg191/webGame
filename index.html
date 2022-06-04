@@ -17,8 +17,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item ">
-                        <a id="btn-menu" class="nav-link text-white" data-bs-toggle="offcanvas" href="#sideMenu" role="button"
-                            aria-controls="offcanvasExample">
+                        <a id="btn-menu" class="nav-link text-white" onclick="menuClicked()" data-bs-toggle="offcanvas"
+                            href="#sideMenu" role="button" aria-controls="offcanvasExample">
                             Menu
                             <i class="bi bi-x-diamond-fill text-white" style="font-size: 1rem; "></i>
                         </a>
@@ -37,10 +37,10 @@
                 <p>As a bounty hunter, killing gives you money</p>
                 <p>use it to upgrade your skills.</p>
             </div>
-            <div class="card bg-grey" id="controls">
+            <div class="card" id="controls">
                 <div class="card-body">
                     <div class="card-title">
-                        <h6 class="text--white">Controls</h6>
+                        <h6>Controls</h6>
                     </div>
                     <div class="card-text">
                         <div class="row ">
@@ -88,15 +88,124 @@
                     </div>
                 </div>
             </div>
+            <div class="card mt-4" id="stats">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h6>Skills And Stats</h6>
+                    </div>
+                    <div class="card-text">
+                        <div class="row ">
+                            <div class="col">
+                                <span class="text-bold">Money: </span>
+                                <span id="money"></span>
+                                <i class="bi bi-coin"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-text">
+                                        <div class="row"
+                                            onclick="onClickUpgradeSkill('speed','money-upgrade-speed-skill')">
+                                            <span class="col-md-1">
+                                                <img src="./assets/speedIcon.svg" height="24" width="24"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Player Speed">
+                                            </span>
+                                            <div class="col-md-7">
+                                                <span id="speed-skill"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span id="money-upgrade-speed-skill"></span>
+                                                <i class="bi bi-coin"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-text">
+                                        <div class="row"
+                                            onclick="onClickUpgradeSkill('missileSpeed','money-upgrade-missile-speed-skill')">
+                                            <div class="col-md-1">
+                                                <img src="./assets/missileIcon.svg" height="24" width="24"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Missile Speed">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span id="missile-speed-skill"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span id="money-upgrade-missile-speed-skill"></span>
+                                                <i class="bi bi-coin"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-text">
+                                        <div class="row"
+                                            onclick="onClickUpgradeSkill('dash','money-upgrade-dash-skill')">
+                                            <div class="col-md-1">
+                                                <img src="./assets/dashIcon.svg" height="24" width="24"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Dash Speed">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span id="dash-skill"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span id="money-upgrade-dash-skill"></span>
+                                                <i class="bi bi-coin"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-text">
+                                        <div class="row"
+                                            onclick="onClickUpgradeSkill('missiles','money-upgrade-missile-skill')">
+                                            <div class="col-md-1">
+                                                <img src="./assets/missileNumberIcon.svg" height="24" width="24"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Number Of Missiles">
+                                            </div>
+                                            <div class="col-md-7">
+                                                <span id="missile-skill"></span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span id="money-upgrade-missile-skill"></span>
+                                                <i class="bi bi-coin"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <canvas id="canvas1"></canvas>
-    <script src="./bootstrapScript.js"></script>
-    <script src="./helper.js"></script>
-    <script src="./script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
+    <script src="./bootstrapScript.js"></script>
+    <script src="./storageManagement.js"></script>
+    <script src="./playerStats.js"></script>
+    <script src="./helper.js"></script>
+    <script src="./script.js"></script>
 </body>
+
 </html>
