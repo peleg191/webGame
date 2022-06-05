@@ -22,20 +22,20 @@ const player = {
     fireCooldown: false,
     timeSinceLastFire: Date.now(),
     playerEvents() {
-        if (keys.ArrowDown && player.y < canvas.height - player.height) {
+        if (keys.ArrowDown && player.y  < canvas.height - player.height ) {
             player.moving = true;
             player.y += player.speed;
             player.frameY = 0;
             player.direction = directions.down;
         }
-        if (keys.ArrowLeft && player.x > 0) {
+        if (keys.ArrowLeft && player.x  > 0) {
             player.moving = true;
             player.x -= player.speed;
             player.frameY = 1;
             player.directionRight = false;
             player.direction = directions.left;
         }
-        if (keys.ArrowRight && player.x < canvas.width - player.width) {
+        if (keys.ArrowRight && player.x  < canvas.width - player.width) {
             player.moving = true;
             player.x += player.speed;
             player.frameY = 2;
@@ -48,7 +48,7 @@ const player = {
             player.frameY = 3;
             player.direction = directions.up;
         }
-        if (keys.x) {
+        if (keys.x || keys.X) {
             if (missiles.length > playerStats.missiles - 1)
                 return;
             player.firing = true;
@@ -56,7 +56,7 @@ const player = {
                 createMissiles();
             this.timeSinceLastFire = Date.now();
         }
-        if (keys.z) {
+        if (keys.z || keys.Z) {
             player.speed += playerStats.dash;
         }
         this.handlePlayerFrame();
