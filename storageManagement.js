@@ -19,3 +19,6 @@ function getLocalStorage(name){
         return;
     return JSON.parse(decryptLocalStorage(data));
 }
+function resetLocalStorage(){
+    localStorage.clear();
+}

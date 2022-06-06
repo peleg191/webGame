@@ -141,7 +141,6 @@ function createEnemies() {
                     //removes one element from the specific index.
                     enemies[index].hide = true;
                     escaped++;
-                    incomingMoneyTransaction--;
                     return;
                 }
                 this.direction = directions.left;

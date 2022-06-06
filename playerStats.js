@@ -7,7 +7,8 @@ let gapsBySkills = { speed: 1, missileSpeed: 5, dash: 0.2, missiles: 1 };
 let moneyElement = document.getElementById('money');
 let defaultPlayerStats = {
     speed: 5, missileSpeed: 10, missiles: 1, money: 0, dash: 1,
-    moneyToUpgrade: { speed: 10, missileSpeed: 10, missiles: 10, dash: 10 }
+    moneyToUpgrade: { speed: 10, missileSpeed: 10, missiles: 10, dash: 10 },
+    moneySpent: 0
 };
 function evaluatePlayerStats() {
     let result = getLocalStorage('data');
@@ -82,12 +83,26 @@ function upgradeSkill(skillName) {
     renderSkillDisplay(skillName);
 }
 function spendMoney(spent) {
+    spent = parseInt(spent);
     let sum = playerStats.money - spent;
     if (sum < 0)
         return false;
     playerStats.money = sum;
     let data = getLocalStorage('data');
     data.money = playerStats.money;
+    data.moneySpent = data.moneySpent +  spent;
     registerData(data);
     return true;
+}
+function resetSkills() {
+    //TODO: return money invested in skills.
+    debugger;
+    let data = getLocalStorage('data');
+    let currentMoney= data.money;
+    resetLocalStorage();
+    let moneySpent = data.moneySpent;
+    data = defaultPlayerStats;
+    data.money = currentMoney +moneySpent;
+    registerData(data);
+    window.location.reload();
 }
