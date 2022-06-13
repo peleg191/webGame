@@ -1,7 +1,10 @@
 const directions = { left: 'left', right: 'right', up: 'up', down: 'down' };
 const canvas = document.getElementById('canvas1');
-canvas.addEventListener('click', canvasClicked,false);
 const ctx = canvas.getContext('2d');
+if (isMobile()) {
+    canvas.addEventListener('touchstart', function(e){canvasTouched(e)}, false);
+    canvas.addEventListener('touchend', function(e){canvasTouchedEnded(e)}, false);
+}
 canvas.width = 800;
 canvas.height = 500;
 var keys = {};
@@ -10,7 +13,7 @@ let escaped = 0;
 var incomingMoneyTransaction = 0;
 evaluatePlayerStats();
 renderSkillDisplay();
-const player = {
+var player = {
     x: 200,
     y: 200,
     width: 32,
@@ -23,20 +26,20 @@ const player = {
     fireCooldown: false,
     timeSinceLastFire: Date.now(),
     playerEvents() {
-        if (keys.ArrowDown && player.y  < canvas.height - player.height ) {
+        if (keys.ArrowDown && player.y < canvas.height - player.height) {
             player.moving = true;
             player.y += player.speed;
             player.frameY = 0;
             player.direction = directions.down;
         }
-        if (keys.ArrowLeft && player.x  > 0) {
+        if (keys.ArrowLeft && player.x > 0) {
             player.moving = true;
             player.x -= player.speed;
             player.frameY = 1;
             player.directionRight = false;
             player.direction = directions.left;
         }
-        if (keys.ArrowRight && player.x  < canvas.width - player.width) {
+        if (keys.ArrowRight && player.x < canvas.width - player.width) {
             player.moving = true;
             player.x += player.speed;
             player.frameY = 2;
@@ -54,7 +57,7 @@ const player = {
                 return;
             player.firing = true;
             // if (Date.now() - this.timeSinceLastFire > 100)
-                createMissiles();
+            createMissiles();
             // this.timeSinceLastFire = Date.now();
         }
         if (keys.z || keys.Z) {
@@ -65,7 +68,7 @@ const player = {
     resetSpeed() {
         player.speed = playerStats.speed;
     },
-    resetMoving(){
+    resetMoving() {
         player.moving = false;
         player.frameX = 0;
     },
@@ -239,8 +242,8 @@ playerSprite.src = './assets/mandalorian.png';
 
 const background = new Image();
 background.src = './assets/background.png';
-const coin = new Image(); 
-coin.src= './assets/coin.svg';
+const coin = new Image();
+coin.src = './assets/coin.svg';
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 }
@@ -359,9 +362,9 @@ function animate() {
     then = now - (elapsed % fpsInterval);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(coin,0,0,32,32);
+    ctx.drawImage(coin, 0, 0, 32, 32);
     player.drawPlayer();
-    if(isMobile())
+    if (isMobile())
         mobileControl.drawControl(ctx);
     player.playerEvents();
     handleEnemiesRender();
