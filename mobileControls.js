@@ -98,9 +98,8 @@ function checkForTouch(event, valueToKeys, actionIfTouched) {
         return;
     let touches = [];
     if (event.touches?.length > 0) {
-        for (let i = 0; i < event.touches.length; i++) {
-            handleTouch(event, i, touchType.touches, touches);
-        }
+            handleTouch(event, 0, touchType.touches, touches);
+        
     }
     else {
         for (let i = 0; i < event.changedTouches.length; i++) {
