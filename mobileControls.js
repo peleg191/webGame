@@ -131,8 +131,8 @@ let canvasTop = rect.top;
 function handleTouch(event, i, touchType, touches) {
     let touch = event[touchType].item(i);
     let item = {};
-    item.x = Math.floor((touch.clientX - canvasLeft) * 1.11);
-    item.y = Math.floor((touch.clientY - canvasTop )* 1.11);
+    item.x = Math.floor((touch.clientX  - canvasLeft) * 1.1);
+    item.y = Math.floor((touch.clientY - canvasTop) * 1.1);
     item.x += item.x > 320 ? 50 :0; 
     item.y += item.y > 200 ? 50 : 0; 
     item.height = 50;
