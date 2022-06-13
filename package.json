@@ -1,0 +1,26 @@
+{
+  "name": "2dgame",
+  "version": "1.0.0",
+  "description": "a game",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build":{
+    "appId": "yourappid",
+    "category": "your.app.category.type",
+    "win": {
+      "target": "squirrel",
+      "icon": "build/icon.ico"
+    }
+  },
+  "author": "ph",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^18.2.4",
+    "electron-builder": "^23.0.3"
+  }
+}

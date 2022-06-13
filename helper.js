@@ -22,7 +22,11 @@ function detectCollisions(firstArray, secondArray) {
             hit.position = {x:elem.x,y:elem.y};
             result.push(hit);
          }
-      })
+      });
    });
    return result;
+}
+function isMobile(){
+   let isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+   return isMobileDevice;
 }

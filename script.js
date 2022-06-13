@@ -1,9 +1,10 @@
 const directions = { left: 'left', right: 'right', up: 'up', down: 'down' };
 const canvas = document.getElementById('canvas1');
+canvas.addEventListener('click', canvasClicked,false);
 const ctx = canvas.getContext('2d');
 canvas.width = 800;
 canvas.height = 500;
-const keys = {};
+var keys = {};
 let kills = 0;
 let escaped = 0;
 var incomingMoneyTransaction = 0;
@@ -52,9 +53,9 @@ const player = {
             if (missiles.length > playerStats.missiles - 1)
                 return;
             player.firing = true;
-            if (Date.now() - this.timeSinceLastFire > 100)
+            // if (Date.now() - this.timeSinceLastFire > 100)
                 createMissiles();
-            this.timeSinceLastFire = Date.now();
+            // this.timeSinceLastFire = Date.now();
         }
         if (keys.z || keys.Z) {
             player.speed += playerStats.dash;
@@ -63,6 +64,10 @@ const player = {
     },
     resetSpeed() {
         player.speed = playerStats.speed;
+    },
+    resetMoving(){
+        player.moving = false;
+        player.frameX = 0;
     },
     handlePlayerFrame() {
         if (player.moving)
@@ -221,6 +226,7 @@ function createMissiles() {
         direction: player.direction,
         sprite: {}
     };
+    console.log('missileCreated');
     const missileSprite = new Image();
     missile.firing = true;
     missileSprite.src = './assets/missile1.png';
@@ -233,6 +239,8 @@ playerSprite.src = './assets/mandalorian.png';
 
 const background = new Image();
 background.src = './assets/background.png';
+const coin = new Image(); 
+coin.src= './assets/coin.svg';
 function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH);
 }
@@ -241,8 +249,7 @@ window.addEventListener('keydown', function (e) {
 });
 window.addEventListener('keyup', function (e) {
     keys[e.key] = false;
-    player.moving = false;
-    player.frameX = 0;
+    player.resetMoving();
 });
 
 
@@ -329,6 +336,8 @@ function handleTextOnCanvas() {
     ctx.fillStyle = "#fefefe"; //<======= here
     ctx.fillText('Kills:' + kills, canvas.width - 150, 30);
     ctx.fillText('Escaped:' + escaped, canvas.width - 150, 60)
+    ctx.fillStyle = 'yellow';
+    ctx.fillText(playerStats.money + incomingMoneyTransaction, 35, 25);
 }
 
 let fps, fpsInterval, startTime, now, then, elapsed;
@@ -350,7 +359,10 @@ function animate() {
     then = now - (elapsed % fpsInterval);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(coin,0,0,32,32);
     player.drawPlayer();
+    if(isMobile())
+        mobileControl.drawControl(ctx);
     player.playerEvents();
     handleEnemiesRender();
     handlePlayerEnemiesCollision();
