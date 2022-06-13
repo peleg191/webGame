@@ -2,7 +2,7 @@ const directions = { left: 'left', right: 'right', up: 'up', down: 'down' };
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 if (isMobile()) {
-    canvas.addEventListener('touchstart', function(e){canvasTouched(e)}, false);
+    canvas.addEventListener('touchstart', function(e){canvasTouched(e,ctx)}, false);
     canvas.addEventListener('touchend', function(e){canvasTouchedEnded(e)}, false);
 }
 canvas.width = 800;

@@ -83,8 +83,8 @@ mobileControl.upKey.sprite.src = './assets/keyUp.png';
 mobileControl.downKey.sprite.src = './assets/keyDown.png';
 mobileControl.rightKey.sprite.src = './assets/keyRight.png';
 mobileControl.leftKey.sprite.src = './assets/keyLeft.png';
-var canvasTouched = (event) => {
-    checkForTouch(event, true);
+var canvasTouched = (event, ctx) => {
+    checkForTouch(event, true, null, ctx);
 };
 var canvasTouchedEnded = (event) => {
     checkForTouch(event, false, function (element) {
@@ -93,13 +93,13 @@ var canvasTouchedEnded = (event) => {
         element.actionOnKeyUp();
     });
 };
-function checkForTouch(event, valueToKeys, actionIfTouched) {
+function checkForTouch(event, valueToKeys, actionIfTouched, ctx) {
     if (!isMobile())
         return;
     let touches = [];
     if (event.touches?.length > 0) {
-            handleTouch(event, 0, touchType.touches, touches);
-        
+        handleTouch(event, 0, touchType.touches, touches);
+
     }
     else {
         for (let i = 0; i < event.changedTouches.length; i++) {
@@ -111,6 +111,11 @@ function checkForTouch(event, valueToKeys, actionIfTouched) {
     touches.forEach(touch => {
         let x = touch.x;
         let y = touch.y;
+        if (ctx) {
+            ctx.beginPath();
+            ctx.rect(x, y, 50, 50);
+            ctx.stroke();
+        }
         mobileControlArray.forEach(element => {
             if (Math.abs(x - element.x) <= element.width && x - element.x > 0 && Math.abs(y - element.y) <= element.height) {
                 keys[element.key] = valueToKeys;
@@ -120,15 +125,19 @@ function checkForTouch(event, valueToKeys, actionIfTouched) {
         });
     })
 }
-let canvasLeft = canvas.clientLeft;
-let canvasTop = canvas.clientTop;
+const rect = canvas.getBoundingClientRect();
+let canvasLeft = rect.left;
+let canvasTop = rect.top;
 function handleTouch(event, i, touchType, touches) {
     let touch = event[touchType].item(i);
     let item = {};
-    item.x = touch.clientX - canvasLeft - 20;
-    item.y = touch.clientY - canvasTop + 75;
+    item.x = Math.floor((touch.clientX - canvasLeft) * 1.11);
+    item.y = Math.floor((touch.clientY - canvasTop )* 1.11);
+    item.x += item.x > 320 ? 50 :0; 
+    item.y += item.y > 200 ? 50 : 0; 
     item.height = 50;
     item.width = 50;
+    console.log('x: ' + item.x +' y: ' + item.y );
     touches.push(item);
 }
 
