@@ -2,8 +2,8 @@ const directions = { left: 'left', right: 'right', up: 'up', down: 'down' };
 const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 if (isMobile()) {
-    canvas.addEventListener('touchstart', function(e){canvasTouched(e,ctx)}, false);
-    canvas.addEventListener('touchend', function(e){canvasTouchedEnded(e)}, false);
+    canvas.addEventListener('touchstart', function (e) { canvasTouched(e, ctx) }, false);
+    canvas.addEventListener('touchend', function (e) { canvasTouchedEnded(e) }, false);
 }
 canvas.width = 800;
 canvas.height = 500;
@@ -248,6 +248,10 @@ function drawSprite(img, sX, sY, sW, sH, dX, dY, dW, dH) {
 }
 window.addEventListener('keydown', function (e) {
     keys[e.key] = true;
+    if (e.key === 'Escape' && !menuOpen) {
+        let menuBtn = document.getElementById('btn-menu');
+        menuBtn.click();
+    }
 });
 window.addEventListener('keyup', function (e) {
     keys[e.key] = false;
