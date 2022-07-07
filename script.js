@@ -229,7 +229,6 @@ function createMissiles() {
         direction: player.direction,
         sprite: {}
     };
-    console.log('missileCreated');
     const missileSprite = new Image();
     missile.firing = true;
     missileSprite.src = './assets/missile1.png';
